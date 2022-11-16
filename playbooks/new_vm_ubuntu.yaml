@@ -1,0 +1,12 @@
+---
+- hosts: Akvorado
+  roles:
+#    - apt_upgrade_pack
+    - ubuntu_repos_proxy
+    - apt_install_pack
+#    - mkuser
+    - ntp
+#    - ssh_root_key
+#    - install_zabbix_ag
+#    - zabbix_active
+  become: yes

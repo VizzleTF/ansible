@@ -1,0 +1,10 @@
+- name: Installing packages on Ubuntu
+  block:
+    - name: Upgrade all packages
+      apt: upgrade=yes
+
+    - name: Installing list of packages
+      apt: name="{{ new_ubuntu_vm.packages }}" state=present update_cache=yes
+
+    - name: Remove old packages
+      apt: autoremove=yes

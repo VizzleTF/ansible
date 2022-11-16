@@ -1,0 +1,14 @@
+new_ubuntu_vm:
+  packages:
+    - telnet
+    - dnsutils
+    - fail2ban
+    - htop
+    - mc
+    - wget
+    - tree
+    - traceroute
+    - nano
+    - curl
+    - ntp
+    - qemu-guest-agent

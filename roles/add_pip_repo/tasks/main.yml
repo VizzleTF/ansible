@@ -1,0 +1,36 @@
+- name: Installing pip on Proxmox
+  block:
+    - name: Upgrade all packages
+      apt: upgrade=yes
+
+    - name: Installing list of packages
+      apt: name=python3-pip state=present update_cache=yes
+
+- name: Creates directory for config
+  file:
+    path: /root/.pip
+    state: directory
+
+- name: Remove old config file
+  file:
+    path: /root/.pip/pip.conf
+    state: absent
+
+
+- name: Add config
+  lineinfile:
+    path: /root/.pip/pip.conf
+    line: |
+      [global] 
+      index-url = https://nexus.spacecorp.ru/repository/pypi/simple
+    state: present
+    create: yes
+
+- name: Install bottle python package
+  pip:
+    name: proxmoxer
+
+- name: Install bottle python package
+  pip:
+    name: requests
+

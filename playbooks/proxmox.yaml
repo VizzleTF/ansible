@@ -1,0 +1,12 @@
+---
+- hosts: Proxmox
+- hosts: dmz4
+  roles:
+#    - mkuser
+#    - new_ubuntu_vm
+    - proxmox_repos_proxy
+    - add_pip_repo
+    - ntp
+    - ssh_root_key
+    - ssh_secure
+  become: yes

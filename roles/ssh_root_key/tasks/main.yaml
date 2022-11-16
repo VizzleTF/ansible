@@ -1,0 +1,15 @@
+- name: Setting ssh
+  block:
+    - name: Adding ssh key for root
+      authorized_key: user=root key="{{ lookup('file', "/root/.ssh/id_rsa.pub") }}"
+
+#    - name: Disable password authentification
+#      lineinfile:
+#        path: /etc/ssh/sshd_config
+#        line: PasswordAuthentication no
+#        create: yes
+
+    - name: Restart ssh
+      service:
+        name: ssh
+        state: restarted

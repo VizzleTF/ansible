@@ -1,0 +1,26 @@
+- name: Setting Active checks
+  block:
+    - name: Set active server
+      lineinfile:
+        path:  /etc/zabbix/zabbix_agentd.conf
+        regexp: '^Server='
+        line: Server=10.200.23.17
+
+    - name: Set server
+      lineinfile:
+        path:  /etc/zabbix/zabbix_agentd.conf
+        regexp: '^ServerActive'
+        line: ServerActive=10.200.23.17
+
+    - name: Restart agent
+      service:
+        name: zabbix-agent
+        state: restarted
+
+    - name: Allow port 10050
+      shell:
+        cmd: ufw allow 10050
+
+    - name: Allow port 10051
+      shell:
+        cmd: ufw allow 10051

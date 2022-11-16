@@ -1,0 +1,88 @@
+- name: Setting ssh
+  block:
+    - name: Update SSH
+      apt:
+        name: ssh
+        state: latest
+        update_cache: yes
+
+    - name: Adding comment
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: '^# security'
+        line: "# security features"
+
+    - name: Adding KexAlgorithms
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: '^    KexAlgorithms'
+        line: "    KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
+ 
+    - name: Adding Ciphers
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: '^    Ciphers'
+        line: "    Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+ 
+    - name: Adding MACs
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: '^    MACs'
+        line: "    MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+ 
+    - name: Disable Roaming
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: '^    UseRoaming'
+        line: "    UseRoaming no"
+ 
+    - name: Restart ssh
+      service:
+        name: ssh
+        state: restarted
+
+    - name: edit hosts.allow for Kvashonkin
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : 10.201.3.14'
+        line: "sshd : 10.201.3.14"
+
+
+    - name: edit hosts.allow for Mezhenniy
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : 10.201.3.40'
+        line: "sshd : 10.201.3.40"
+
+
+    - name: edit hosts.allow for Ansible
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : 10.200.23.2'
+        line: "sshd : 10.200.23.2"
+
+    - name: edit hosts.allow for Proxmox
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : 10.200.22.0/24'
+        line: "sshd : 10.200.22.0/24"
+
+    - name: edit hosts.allow for Localhost
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : 127.0.0.1'
+        line: "sshd : 127.0.0.1"
+
+    - name: edit hosts.deny
+      lineinfile:
+        path: /etc/hosts.allow
+        regexp: '^sshd : ALL'
+        line: "sshd : ALL"
+        state: absent
+
+    - name: edit hosts.deny
+      lineinfile:
+        path: /etc/hosts.deny
+        regexp: '^sshd : ALL'
+        line: "sshd : ALL"
+

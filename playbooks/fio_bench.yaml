@@ -1,0 +1,8 @@
+- hosts: Oxidized
+  roles:
+    - fio
+  vars:
+    fiotest_directory: '/root/fiotest'
+    fiotest_rounds: 5
+    fiotest_retry_attempt: 120
+    fiotest_retry_delay: 60

@@ -1,0 +1,71 @@
+- name: Setting proxy repos
+  block:
+     - name: Remove folder (delete file)
+       shell:
+         cmd: rm -rf /etc/apt/sources.list.d
+       args:
+         warn: no
+
+#     - name: mkdir 
+#       shell: mkdir /etc/apt/preferences.d & mkdir /etc/apt/apt.conf.d
+#       args:
+#         warn: no
+
+     - name: Add 1st
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal main restricted" > /etc/apt/sources.list
+
+     - name: Add 2nd
+       shell:
+         cmd:  echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-updates main restricted" >> /etc/apt/sources.list
+
+     - name: Add 3th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal universe" >> /etc/apt/sources.list
+
+     - name: Add 4th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-updates universe" >> /etc/apt/sources.list
+
+     - name: Add 5th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal multiverse" >> /etc/apt/sources.list
+
+     - name: Add 6th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-updates multiverse" >> /etc/apt/sources.list
+
+     - name: Add 7th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-backports main restricted universe multiverse" >> /etc/apt/sources.list
+
+     - name: Add 8th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-security main restricted" >> /etc/apt/sources.list
+
+     - name: Add 9th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-security universe" >> /etc/apt/sources.list
+
+     - name: Add 10th
+       shell:
+         cmd: echo "deb https://nexus.spacecorp.ru/repository/yandex-ubuntu focal-security multiverse" >> /etc/apt/sources.list
+
+     - name: Create a directory if it does not exist
+       file:
+         path: /etc/apt/keyrings
+         state: directory
+         mode: '0755'
+
+     - name: create keyring Docker
+       copy:
+         src: /root/ansible/roles/ubuntu_repos_proxy/templates/docker.gpg
+         dest: /etc/apt/keyrings/docker.gpg
+         owner: root
+         group: root
+         mode: u=rwx,g=r,o=r
+
+     - name: Add Docker
+       shell:
+         cmd: echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://nexus.spacecorp.ru/repository/docker-ubuntu   focal stable" >> /etc/apt/sources.list
+

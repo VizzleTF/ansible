@@ -1,0 +1,5 @@
+---
+- hosts: Debian
+  roles:
+    - apt_upgrade_pack
+  become: yes

@@ -1,0 +1,59 @@
+- name: Setting proxy repos
+  block:
+     - name: Remove file (delete file)
+       file:
+         path: /etc/apt/sources.list
+         state: absent
+
+     - name: Remove file (delete file)
+       file:
+         path: /etc/apt/sources.list.d/zabbix.list
+         state: absent
+
+     - name: Remove file (delete file)
+       file:
+         path: /etc/apt/sources.list.d/zabbix.list.list
+         state: absent
+
+     - name: Remove file (delete file)
+       file:
+         path: /etc/apt/sources.list.d/pve-enterprise.list
+         state: absent
+
+#     - name: Add empty file (create file)
+#       file:
+#         path: /etc/apt/sources.list
+#         state: touch
+
+     - name: Add 1st
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/debian-bullseye/ bullseye main contrib
+         state: present
+
+     - name: Add 2nd
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/debian-bullseye/ bullseye-updates main contrib
+         state: present
+
+     - name: Add 3rd
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/debian-security-bullseye/ bullseye-security main contrib
+         state: present
+
+     - name: Add 4th
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/Proxmox/ bullseye pve-no-subscription
+         state: present
+
+#     - name: Add Zabbix
+#       apt_repository:
+#         repo: deb https://nexus.spacecorp.ru/repository/Zabbix6/ bullseye main
+#         filename: zabbix
+#         state: present
+
+#     - name: Add Ceph
+#       apt_repository:
+#         repo: deb https://nexus.spacecorp.ru/repository/proxmox-ceph/ bullseye main
+#         filename: ceph
+#         state: present
+

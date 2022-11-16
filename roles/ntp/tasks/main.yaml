@@ -1,0 +1,26 @@
+
+- name: Setting local NTP
+  block:
+    - name: Set timezone to Europe/Moscow
+      timezone: name=Europe/Moscow
+
+    - name: Remove standart ntp pools
+      lineinfile:
+        path: /etc/ntp.conf
+        regexp: '^pool'
+        state: absent
+
+    - name: Add a local server
+      lineinfile:
+        path: /etc/ntp.conf
+        line: server 10.200.3.50
+        create: yes
+
+    - name: Restart NTP
+      service:
+        name: ntp
+        state: restarted
+
+    - name: Enable NTP
+      shell:
+        cmd: systemctl enable ntp

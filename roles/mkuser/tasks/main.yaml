@@ -1,0 +1,11 @@
+  - name: Add user to remote hosts
+    user: name=ansible groups=sudo shell=/bin/bash password=$6$KjyfytoJ$hoQdVIGcRZgje2HpHFf8ldvooLfY774SrEpHkADUf3d7uGBSwVLeMXsPIfb4l2TaXWvprMz8>
+
+  - name: Add SSH keys to remote hosts
+    authorized_key: user=ansible key="{{ lookup('file', "/root/.ssh/id_rsa.pub") }}"
+
+  - name: Make users passwordless for sudo in group sudo
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      line: 'ansible ALL=(ALL) NOPASSWD: ALL'

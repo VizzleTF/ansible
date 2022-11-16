@@ -1,0 +1,27 @@
+- name: Setting proxy repos
+  block:
+     - name: Remove file (delete file)
+       file:
+         path: /etc/apt/sources.list
+         state: absent
+
+     - name: Add empty file (delete file)
+       file:
+         path: /etc/apt/sources.list
+         state: touch
+
+     - name: Add astra-base repository into sources list
+       apt_repository:
+         validate_certs: no
+         repo: deb https://nexus.spacecorp.ru/repository/astra-base/ 1.7_x86-64 main contrib non-free
+         state: present
+
+     - name: Add astra-update repository into sources list
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/astra-update/ 1.7_x86-64 main contrib non-free
+         state: present
+
+     - name: Add astra-extended repository into sources list
+       apt_repository:
+         repo: deb https://nexus.spacecorp.ru/repository/astra-extended/ 1.7_x86-64 main contrib non-free
+         state: present

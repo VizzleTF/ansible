@@ -1,0 +1,13 @@
+
+- name: Setting alias for ll
+  block:
+#    - name: setting alias for ll
+#      command: 
+#        cmd:  alias ll='ls  --color=auto -alF'
+
+     - name: Add alias for ll
+       lineinfile:
+         path: /root/.bashrc
+         line: "alias ll='ls --color=auto -alF'"
+         state: present
+         create: yes

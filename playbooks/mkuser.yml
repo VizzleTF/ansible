@@ -1,0 +1,5 @@
+---
+- hosts: Proxmox
+  become: yes
+  roles:
+   - mkuser
