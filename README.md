@@ -18,10 +18,3 @@ git config credential.helper store
 2. Запустить ./new_host.sh
 3. Радоваться
 ```
-##
-# ansible
-# ansible
-# ansible
-# ansible
-# ansible
-# ansible
